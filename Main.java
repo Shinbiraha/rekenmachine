@@ -1,29 +1,33 @@
-import java.awt.event.*;
+import java.awt.*;
 import javax.swing.*;
 
 public class Main {
 
-//*define window size */
+//define window size
 static short width = 600;
 static short height = 900;
 
-//*Set default Calculator data */
+//Set default Calculator data
 static String a = "";
 static String operator = "";
 static String b = "";
 
-//*Create the window */
+//Create the window
 static JFrame frame = new JFrame("Calculator");
     public static void main(String[] args) {
 
+    //make the grid layout
+    frame.setLayout(new GridBagLayout());
+
+    //window position    
     frame.setSize(width, height);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setVisible(true);
-
+    
+    
     JLabel label = new JLabel("Testing");
     label.setBounds(100, 0, 150, 20);
 
-    JButton een = new JButton("1");
+    /*JButton een = new JButton("1");
     een.setBounds(250, 100, 100, 30);
 
     JButton twee = new JButton("2");
@@ -74,6 +78,12 @@ static JFrame frame = new JFrame("Calculator");
 
     frame.add(nul);   
 
-    frame.add(label);
+    frame.add(label);*/
+
+    frame.setVisible(true);
+    }
+    //create new button
+    public static void createbutton(ActionListener buttonlListener, String displaytext, Integer gridx, Integer gridy) {
+
     }
 }
