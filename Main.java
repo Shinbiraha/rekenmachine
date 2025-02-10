@@ -16,14 +16,12 @@ static Font buttonfont = new Font("Aptos", Font.PLAIN, 40);
 static double a = 0;
 static String operator = "";
 static double b = 0; 
-static boolean usingdecimal = false;
-static short decimals =0;
 
 //Create the window
 static JFrame frame = new JFrame("Calculator");
 
-//create input screen
-static JLabel label = new JLabel("Testing");
+//create the screen
+static JLabel label = new JLabel("");
     public static void main(String[] args) {
 
     //make the grid layout
@@ -43,6 +41,8 @@ static JLabel label = new JLabel("Testing");
 
     //adding style to screen
     label.setFont(buttonfont);
+    label.setOpaque(true);
+    label.setBackground(new Color(100, 200, 255));
 
     //add numbers
     addnumbutton(1, 0, 1);
@@ -56,34 +56,58 @@ static JLabel label = new JLabel("Testing");
     addnumbutton(9, 2, 3);
     addnumbutton(0, 0, 4);
 
+    //add operators
+    addopbutton("+", 1, 4);
+    addopbutton("-", 2, 4);
+    addopbutton("=", 0, 5);
+    addopbutton("/", 1, 5);
+    addopbutton("*", 2, 5);
+
+
     //update the window
     frame.setVisible(true);
+    frame.add(label, gbc);
     }
 
+    public static void addop(String buttoninput) {
+        frame.requestFocusInWindow();
+        Integer operator = Integer.parseInt(buttoninput);
+    }
+    
     public static void addnum(String buttonInput) {
         frame.requestFocusInWindow();
         Integer number = Integer.parseInt(buttonInput);
-        if (operator != "" || a == 0.0) {
-            if (usingdecimal) {
-                decimals++;
-            } else {
-                b *= 10;
-            }
-            b += number / Math.pow(10, decimals);
-        }
+    }
+
+    public static void addopbutton(String operator, Integer gridx, Integer gridy) {
+        ActionListener buttonListener = e -> addop(((JButton) e.getSource()). getText());
+        createopbutton(buttonListener, String.valueOf(operator), gridx, gridy);
     }
 
     public static void addnumbutton(Integer number, Integer gridx, Integer gridy) {
         ActionListener buttonListener = e -> addnum(((JButton) e.getSource()). getText());
-        createbutton(buttonListener, String.valueOf(number), gridx, gridy);
+        createnumbutton(buttonListener, String.valueOf(number), gridx, gridy);
     }
-    //create new button
-    public static void createbutton(ActionListener buttonlListener, String displaytext, Integer gridx, Integer gridy) {
+
+    //create operator button
+    public static void createopbutton(ActionListener buttonListener, String displaytext, Integer gridx, Integer gridy) {
         GridBagConstraints gbc = new GridBagConstraints();
         JButton num = new JButton(displaytext);
         num.setPreferredSize(buttonsize);
         num.setFont(buttonfont);
-        num.addActionListener(buttonlListener);
+        num.addActionListener(buttonListener);
+        gbc.gridx = gridx;
+        gbc.gridy = gridy;
+        frame.add(num, gbc);
+    }
+
+    //create num button
+    public static void createnumbutton(ActionListener buttonListener, String displaytext, Integer gridx, Integer gridy) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        JButton num = new JButton(displaytext);
+        num.setPreferredSize(buttonsize);
+        num.setFont(buttonfont);
+        num.addActionListener(buttonListener);
         gbc.gridx = gridx;
         gbc.gridy = gridy;
         frame.add(num, gbc);
