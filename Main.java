@@ -1,6 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class Main {
 
@@ -77,6 +78,30 @@ static JLabel label = new JLabel("");
     public static void addnum(String buttonInput) {
         frame.requestFocusInWindow();
         Integer number = Integer.parseInt(buttonInput);
+    }
+
+    public static void setOperator() {
+        frame.requestFocusInWindow();
+        if (a == 0) {
+            a = b;
+            b = 0;
+        }
+        if (b != 0) {
+            calculate();
+        }
+    }
+
+    public static void calculate() {
+        frame.requestFocusInWindow();
+        if (Objects.equals(operator, "+")) {
+            a = a + b;
+        } else if (Objects.equals(operator, "-")) {
+            a = a - b;
+        } else if (Objects.equals(operator, "*")) {
+            a = a * b;
+        } else if (Objects.equals(operator, "/")) {
+            a = a / b;
+        }
     }
 
     public static void addopbutton(String operator, Integer gridx, Integer gridy) {
