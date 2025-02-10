@@ -70,14 +70,24 @@ static JLabel label = new JLabel("");
     frame.add(label, gbc);
     }
 
-    public static void addop(String buttoninput) {
+    public static void addop(String buttonInput) {
         frame.requestFocusInWindow();
-        Integer operator = Integer.parseInt(buttoninput);
+        if (a == 0) {
+            a = b;
+            b = 0;
+        } if (b != 0) {
+            calculate();
+        }
+        operator = buttonInput;
+        updateNumDisplay();
     }
     
-    public static void addnum(String buttonInput) {
+    public static void addNum(String buttonInput) {
         frame.requestFocusInWindow();
-        Integer number = Integer.parseInt(buttonInput);
+        int number = Integer.parseInt(buttonInput);
+        b *= 10;
+        b += number;
+        updateNumDisplay();
     }
 
     public static void setOperator() {
@@ -93,6 +103,7 @@ static JLabel label = new JLabel("");
 
     public static void calculate() {
         frame.requestFocusInWindow();
+        System.out.printf("result calculated: %s %s %s%n", a, operator, b);
         if (Objects.equals(operator, "+")) {
             a = a + b;
         } else if (Objects.equals(operator, "-")) {
@@ -102,6 +113,9 @@ static JLabel label = new JLabel("");
         } else if (Objects.equals(operator, "/")) {
             a = a / b;
         }
+        b = 0;
+        operator = "";
+        System.out.printf("result calculated: %s %s %s%n", a, operator, b);
     }
 
     public static void addopbutton(String operator, Integer gridx, Integer gridy) {
@@ -110,7 +124,7 @@ static JLabel label = new JLabel("");
     }
 
     public static void addnumbutton(Integer number, Integer gridx, Integer gridy) {
-        ActionListener buttonListener = e -> addnum(((JButton) e.getSource()). getText());
+        ActionListener buttonListener = e -> addNum(((JButton) e.getSource()). getText());
         createnumbutton(buttonListener, String.valueOf(number), gridx, gridy);
     }
 
@@ -137,4 +151,16 @@ static JLabel label = new JLabel("");
         gbc.gridy = gridy;
         frame.add(num, gbc);
     }
+    public static void updateNumDisplay() {
+        String tempa = String.valueOf(a);
+        if (tempa.equals("0.0")) {
+            tempa = "";
+        }
+        String tempb = String.valueOf(b);
+        if (Objects.equals(operator, "") && !tempa.isEmpty()) {
+            tempb = "";
+        }
+        label.setText(String.format("%s %s %s", tempa, operator, tempb));
+    }
 }
+
